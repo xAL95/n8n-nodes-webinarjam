@@ -5,8 +5,8 @@ export class EverWebinar implements INodeType {
 		displayName: 'EverWebinar',
 		name: 'everWebinar',
 		icon: {
-			light: 'file:../../icons/everwebinar.svg',
-			dark: 'file:../../icons/everwebinar.svg',
+			light: 'file:../../icons/everwebinar.light.svg',
+			dark: 'file:../../icons/everwebinar.dark.svg',
 		},
 		group: ['input'],
 		version: 1,
@@ -74,18 +74,6 @@ export class EverWebinar implements INodeType {
 				},
 				options: [
 					{
-						name: 'Get Many',
-						value: 'getMany',
-						action: 'Get all webinars',
-						description: 'Retrieve all Webinars',
-						routing: {
-							request: {
-								method: 'POST',
-								url: '/everwebinar/webinars',
-							},
-						},
-					},
-					{
 						name: 'Get',
 						value: 'get',
 						action: 'Get a webinar',
@@ -98,14 +86,14 @@ export class EverWebinar implements INodeType {
 						},
 					},
 					{
-						name: 'Register',
-						value: 'register',
-						action: 'Register a person',
-						description: 'Register a person to a specific webinar',
+						name: 'Get Many',
+						value: 'getMany',
+						action: 'Get all webinars',
+						description: 'Retrieve all Webinars',
 						routing: {
 							request: {
 								method: 'POST',
-								url: '/everwebinar/register',
+								url: '/everwebinar/webinars',
 							},
 						},
 					},
@@ -139,6 +127,18 @@ export class EverWebinar implements INodeType {
 										},
 									},
 								},
+							},
+						},
+					},
+					{
+						name: 'Register',
+						value: 'register',
+						action: 'Register a person',
+						description: 'Register a person to a specific webinar',
+						routing: {
+							request: {
+								method: 'POST',
+								url: '/everwebinar/register',
 							},
 						},
 					},
@@ -277,7 +277,7 @@ export class EverWebinar implements INodeType {
 					minValue: 1,
 				},
 				description: 'Max number of results to return',
-				default: 1,
+				default: 50,
 				displayOptions: {
 					show: {
 						resource: ['everWebinar'],
@@ -320,19 +320,6 @@ export class EverWebinar implements INodeType {
 				},
 				options: [
 					{
-						displayName: 'Last Name',
-						name: 'lastName',
-						type: 'string',
-						default: '',
-						routing: {
-							request: {
-								body: {
-									last_name: '={{ $value }}',
-								},
-							},
-						},
-					},
-					{
 						displayName: 'Country',
 						name: 'country',
 						type: 'string',
@@ -346,35 +333,14 @@ export class EverWebinar implements INodeType {
 						},
 					},
 					{
-						displayName: 'State',
-						name: 'state',
+						displayName: 'Date',
+						name: 'date',
 						type: 'string',
+						hint: '2025-01-01 09:00',
+						description:
+							'Use the DATE parameter to register a person to a specific webinar session date. Make sure it matches a valid date returned by a previous API call, or else the API will not be able to register the user to any event at all. Also, if the call was made using a custom timezone, make sure that the same timezone is passed with the request.',
 						default: '',
-						routing: {
-							request: {
-								body: {
-									country: '={{ $value }}',
-								},
-							},
-						},
-					},
-					{
-						displayName: 'Timezone ID',
-						name: 'timezoneId',
-						type: 'options',
-						hint: 'This field is mandatory if the registrants are from Texas, USA.',
-						default: '2',
-						options: [
-							{ name: 'Mountain Time (US and Canada)', value: '2' },
-							{ name: 'Central Time (US and Canada)', value: '3' },
-						],
-						routing: {
-							request: {
-								body: {
-									timezone_id: '={{ $value }}',
-								},
-							},
-						},
+						routing: { request: { body: { date: '={{ $value }}' } } },
 					},
 					{
 						displayName: 'IP Address',
@@ -390,16 +356,14 @@ export class EverWebinar implements INodeType {
 						},
 					},
 					{
-						displayName: 'Phone Country Code',
-						name: 'phoneCountryCode',
+						displayName: 'Last Name',
+						name: 'lastName',
 						type: 'string',
-						hint: 'Must start with "+"',
-						placeholder: '+49',
 						default: '',
 						routing: {
 							request: {
 								body: {
-									phone_country_code: '={{ $value }}',
+									last_name: '={{ $value }}',
 								},
 							},
 						},
@@ -420,15 +384,29 @@ export class EverWebinar implements INodeType {
 						},
 					},
 					{
-						displayName: 'Twilio Consent',
-						name: 'twilioConsent',
-						type: 'boolean',
-						hint: 'This field will be mandatory if the phone number field is enabled for the webinar',
-						default: false,
+						displayName: 'Phone Country Code',
+						name: 'phoneCountryCode',
+						type: 'string',
+						hint: 'Must start with "+"',
+						placeholder: '+49',
+						default: '',
 						routing: {
 							request: {
 								body: {
-									twilio_consent: '={{ $value }}',
+									phone_country_code: '={{ $value }}',
+								},
+							},
+						},
+					},
+					{
+						displayName: 'State',
+						name: 'state',
+						type: 'string',
+						default: '',
+						routing: {
+							request: {
+								body: {
+									country: '={{ $value }}',
 								},
 							},
 						},
@@ -444,14 +422,36 @@ export class EverWebinar implements INodeType {
 						routing: { request: { body: { timezone: '={{ $value }}' } } },
 					},
 					{
-						displayName: 'Date',
-						name: 'date',
-						type: 'string',
-						hint: '2025-01-01 09:00',
-						description:
-							'Use the DATE parameter to register a person to a specific webinar session date. Make sure it matches a valid date returned by a previous API call, or else the API will not be able to register the user to any event at all. Also, if the call was made using a custom timezone, make sure that the same timezone is passed with the request.',
-						default: '',
-						routing: { request: { body: { date: '={{ $value }}' } } },
+						displayName: 'Timezone ID',
+						name: 'timezoneId',
+						type: 'options',
+						hint: 'This field is mandatory if the registrants are from Texas, USA.',
+						default: '2',
+						options: [
+							{ name: 'Mountain Time (US and Canada)', value: '2' },
+							{ name: 'Central Time (US and Canada)', value: '3' },
+						],
+						routing: {
+							request: {
+								body: {
+									timezone_id: '={{ $value }}',
+								},
+							},
+						},
+					},
+					{
+						displayName: 'Twilio Consent',
+						name: 'twilioConsent',
+						type: 'boolean',
+						hint: 'This field will be mandatory if the phone number field is enabled for the webinar',
+						default: false,
+						routing: {
+							request: {
+								body: {
+									twilio_consent: '={{ $value }}',
+								},
+							},
+						},
 					},
 				],
 			},
@@ -469,7 +469,6 @@ export class EverWebinar implements INodeType {
 					},
 				},
 				options: [
-					// ---- Attended Live (nested) ----
 					{
 						displayName: 'Attended Live',
 						name: 'attendedLive',
@@ -508,8 +507,6 @@ export class EverWebinar implements INodeType {
 							},
 						],
 					},
-
-					// ---- Attended Replay (nested) ----
 					{
 						displayName: 'Attended Replay',
 						name: 'attendedReplay',
@@ -549,30 +546,6 @@ export class EverWebinar implements INodeType {
 						],
 					},
 					{
-						displayName: 'Purchased',
-						name: 'purchased',
-						type: 'options',
-						default: '1',
-						options: [
-							//{ name: 'All Registrants', value: '0' },
-							{ name: 'Purchased a Product', value: '1' },
-							{ name: 'Did Not Purchase a Product', value: '2' },
-						],
-						routing: { request: { body: { purchased: '={{ $value }}' } } },
-					},
-					{
-						displayName: 'Page',
-						name: 'page',
-						type: 'number',
-						default: 1,
-						typeOptions: {
-							minValue: 1,
-						},
-						routing: {
-							request: { body: { page: '={{ $value }}' } },
-						},
-					},
-					{
 						displayName: 'Date Range',
 						name: 'date_range',
 						type: 'options',
@@ -589,6 +562,30 @@ export class EverWebinar implements INodeType {
 							{ name: 'Last 30 Days', value: '8' },
 						],
 						routing: { request: { body: { date_range: '={{ $value }}' } } },
+					},
+					{
+						displayName: 'Page',
+						name: 'page',
+						type: 'number',
+						default: 1,
+						typeOptions: {
+							minValue: 1,
+						},
+						routing: {
+							request: { body: { page: '={{ $value }}' } },
+						},
+					},
+					{
+						displayName: 'Purchased',
+						name: 'purchased',
+						type: 'options',
+						default: '1',
+						options: [
+							//{ name: 'All Registrants', value: '0' },
+							{ name: 'Purchased a Product', value: '1' },
+							{ name: 'Did Not Purchase a Product', value: '2' },
+						],
+						routing: { request: { body: { purchased: '={{ $value }}' } } },
 					},
 					{
 						displayName: 'Search',

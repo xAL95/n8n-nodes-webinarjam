@@ -5,8 +5,8 @@ export class WebinarJam implements INodeType {
 		displayName: 'WebinarJam',
 		name: 'webinarJam',
 		icon: {
-			light: 'file:../../icons/webinarjam.svg',
-			dark: 'file:../../icons/webinarjam.svg',
+			light: 'file:../../icons/webinarjam.light.svg',
+			dark: 'file:../../icons/webinarjam.dark.svg',
 		},
 		group: ['input'],
 		version: 1,
@@ -74,18 +74,6 @@ export class WebinarJam implements INodeType {
 				},
 				options: [
 					{
-						name: 'Get Many',
-						value: 'getMany',
-						action: 'Get all webinars',
-						description: 'Retrieve all Webinars',
-						routing: {
-							request: {
-								method: 'POST',
-								url: '/webinarjam/webinars',
-							},
-						},
-					},
-					{
 						name: 'Get',
 						value: 'get',
 						action: 'Get a webinar',
@@ -98,14 +86,14 @@ export class WebinarJam implements INodeType {
 						},
 					},
 					{
-						name: 'Register',
-						value: 'register',
-						action: 'Register a person',
-						description: 'Register a person to a specific webinar',
+						name: 'Get Many',
+						value: 'getMany',
+						action: 'Get all webinars',
+						description: 'Retrieve all Webinars',
 						routing: {
 							request: {
 								method: 'POST',
-								url: '/webinarjam/register',
+								url: '/webinarjam/webinars',
 							},
 						},
 					},
@@ -139,6 +127,18 @@ export class WebinarJam implements INodeType {
 										},
 									},
 								},
+							},
+						},
+					},
+					{
+						name: 'Register',
+						value: 'register',
+						action: 'Register a person',
+						description: 'Register a person to a specific webinar',
+						routing: {
+							request: {
+								method: 'POST',
+								url: '/webinarjam/register',
 							},
 						},
 					},
@@ -255,7 +255,7 @@ export class WebinarJam implements INodeType {
 					minValue: 1,
 				},
 				description: 'Max number of results to return',
-				default: 1,
+				default: 50,
 				displayOptions: {
 					show: {
 						resource: ['webinarJam'],
@@ -298,6 +298,32 @@ export class WebinarJam implements INodeType {
 				},
 				options: [
 					{
+						displayName: 'Country',
+						name: 'country',
+						type: 'string',
+						default: '',
+						routing: {
+							request: {
+								body: {
+									country: '={{ $value }}',
+								},
+							},
+						},
+					},
+					{
+						displayName: 'IP Address',
+						name: 'ipAddress',
+						type: 'string',
+						default: '',
+						routing: {
+							request: {
+								body: {
+									ip_address: '={{ $value }}',
+								},
+							},
+						},
+					},
+					{
 						displayName: 'Last Name',
 						name: 'lastName',
 						type: 'string',
@@ -311,14 +337,31 @@ export class WebinarJam implements INodeType {
 						},
 					},
 					{
-						displayName: 'Country',
-						name: 'country',
+						displayName: 'Phone',
+						name: 'phone',
 						type: 'string',
+						hint: 'Only numbers',
+						placeholder: '1622020155',
 						default: '',
 						routing: {
 							request: {
 								body: {
-									country: '={{ $value }}',
+									phone: '={{ $value }}',
+								},
+							},
+						},
+					},
+					{
+						displayName: 'Phone Country Code',
+						name: 'phoneCountryCode',
+						type: 'string',
+						hint: 'Must start with "+"',
+						placeholder: '+49',
+						default: '',
+						routing: {
+							request: {
+								body: {
+									phone_country_code: '={{ $value }}',
 								},
 							},
 						},
@@ -355,49 +398,6 @@ export class WebinarJam implements INodeType {
 						},
 					},
 					{
-						displayName: 'IP Address',
-						name: 'ipAddress',
-						type: 'string',
-						default: '',
-						routing: {
-							request: {
-								body: {
-									ip_address: '={{ $value }}',
-								},
-							},
-						},
-					},
-					{
-						displayName: 'Phone Country Code',
-						name: 'phoneCountryCode',
-						type: 'string',
-						hint: 'Must start with "+"',
-						placeholder: '+49',
-						default: '',
-						routing: {
-							request: {
-								body: {
-									phone_country_code: '={{ $value }}',
-								},
-							},
-						},
-					},
-					{
-						displayName: 'Phone',
-						name: 'phone',
-						type: 'string',
-						hint: 'Only numbers',
-						placeholder: '1622020155',
-						default: '',
-						routing: {
-							request: {
-								body: {
-									phone: '={{ $value }}',
-								},
-							},
-						},
-					},
-					{
 						displayName: 'Twilio Consent',
 						name: 'twilioConsent',
 						type: 'boolean',
@@ -427,7 +427,6 @@ export class WebinarJam implements INodeType {
 					},
 				},
 				options: [
-					// ---- Attended Live (nested) ----
 					{
 						displayName: 'Attended Live',
 						name: 'attendedLive',
@@ -466,8 +465,6 @@ export class WebinarJam implements INodeType {
 							},
 						],
 					},
-
-					// ---- Attended Replay (nested) ----
 					{
 						displayName: 'Attended Replay',
 						name: 'attendedReplay',
@@ -507,30 +504,6 @@ export class WebinarJam implements INodeType {
 						],
 					},
 					{
-						displayName: 'Purchased',
-						name: 'purchased',
-						type: 'options',
-						default: '1',
-						options: [
-							//{ name: 'All Registrants', value: '0' },
-							{ name: 'Purchased a Product', value: '1' },
-							{ name: 'Did Not Purchase a Product', value: '2' },
-						],
-						routing: { request: { body: { purchased: '={{ $value }}' } } },
-					},
-					{
-						displayName: 'Page',
-						name: 'page',
-						type: 'number',
-						default: 1,
-						typeOptions: {
-							minValue: 1,
-						},
-						routing: {
-							request: { body: { page: '={{ $value }}' } },
-						},
-					},
-					{
 						displayName: 'Date Range',
 						name: 'date_range',
 						type: 'options',
@@ -547,6 +520,30 @@ export class WebinarJam implements INodeType {
 							{ name: 'Last 30 Days', value: '8' },
 						],
 						routing: { request: { body: { date_range: '={{ $value }}' } } },
+					},
+					{
+						displayName: 'Page',
+						name: 'page',
+						type: 'number',
+						default: 1,
+						typeOptions: {
+							minValue: 1,
+						},
+						routing: {
+							request: { body: { page: '={{ $value }}' } },
+						},
+					},
+					{
+						displayName: 'Purchased',
+						name: 'purchased',
+						type: 'options',
+						default: '1',
+						options: [
+							//{ name: 'All Registrants', value: '0' },
+							{ name: 'Purchased a Product', value: '1' },
+							{ name: 'Did Not Purchase a Product', value: '2' },
+						],
+						routing: { request: { body: { purchased: '={{ $value }}' } } },
 					},
 					{
 						displayName: 'Search',

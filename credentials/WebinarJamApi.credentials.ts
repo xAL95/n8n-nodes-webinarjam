@@ -11,8 +11,8 @@ export class WebinarJamApi implements ICredentialType {
 	displayName = 'WebinarJam API';
 	documentationUrl = 'https://support.webinarjam.com/support/solutions/153000174610';
 	icon: Icon = {
-		light: 'file:../icons/everwebinar.svg',
-		dark: 'file:../icons/everwebinar.svg',
+		light: 'file:../icons/everwebinar.light.svg',
+		dark: 'file:../icons/everwebinar.dark.svg',
 	};
 	properties: INodeProperties[] = [
 		{
