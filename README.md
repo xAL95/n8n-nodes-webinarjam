@@ -79,4 +79,5 @@ If you successfully use them with older n8n versions, please consider opening a 
 ## Version history
 
 - **0.1.0** – Initial release of WebinarJam and EverWebinar nodes
+- **0.1.1** - Add dark icons for WebinarJam and EverWebinar and fix lint issues
 
