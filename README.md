@@ -80,4 +80,5 @@ If you successfully use them with older n8n versions, please consider opening a 
 
 - **0.1.0** – Initial release of WebinarJam and EverWebinar nodes
 - **0.1.2** - Add dark icons for WebinarJam and EverWebinar and fix lint issues
+- **0.2.0** - Structural refactor, renamed credentials, and added a new `general` operation with the `getCountries` option
 
