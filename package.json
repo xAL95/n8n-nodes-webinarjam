@@ -1,6 +1,6 @@
 {
 	"name": "n8n-nodes-webinarjam",
-	"version": "0.2.0",
+	"version": "0.2.1",
 	"description": "Use WebinarJam and EverWebinar in n8n workflows to automate webinar registrations and attendee handling.",
 	"license": "MIT",
 	"homepage": "",
