@@ -8,11 +8,11 @@ import type {
 
 export class WebinarJamApi implements ICredentialType {
 	name = 'webinarJamApi';
-	displayName = 'WebinarJam API';
+	displayName = 'WebinarJam / EverWebinar API';
 	documentationUrl = 'https://support.webinarjam.com/support/solutions/153000174610';
 	icon: Icon = {
-		light: 'file:../icons/everwebinar.light.svg',
-		dark: 'file:../icons/everwebinar.dark.svg',
+		light: 'file:../icons/webinarjam.light.svg',
+		dark: 'file:../icons/webinarjam.dark.svg',
 	};
 	properties: INodeProperties[] = [
 		{
@@ -36,7 +36,7 @@ export class WebinarJamApi implements ICredentialType {
 	test: ICredentialTestRequest = {
 		request: {
 			baseURL: 'https://api.webinarjam.com',
-			url: '/everwebinar/webinars',
+			url: '/webinarjam/webinars',
 			method: 'POST',
 		},
 	};

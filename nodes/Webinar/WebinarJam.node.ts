@@ -1,4 +1,5 @@
 import { NodeConnectionTypes, type INodeType, type INodeTypeDescription } from 'n8n-workflow';
+import { operationGeneral } from './shared/operationGeneral';
 
 export class WebinarJam implements INodeType {
 	description: INodeTypeDescription = {
@@ -56,12 +57,17 @@ export class WebinarJam implements INodeType {
 				noDataExpression: true,
 				options: [
 					{
+						name: 'General',
+						value: 'general',
+					},
+					{
 						name: 'WebinarJam',
 						value: 'webinarJam',
 					},
 				],
 				default: 'webinarJam',
 			},
+			...operationGeneral,
 			{
 				displayName: 'Operation',
 				name: 'operation',
