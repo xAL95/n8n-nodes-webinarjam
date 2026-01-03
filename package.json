@@ -34,8 +34,8 @@
 			"dist/credentials/WebinarJamApi.credentials.js"
 		],
 		"nodes": [
-			"dist/nodes/WebinarJam/WebinarJam.node.js",
-			"dist/nodes/EverWebinar/EverWebinar.node.js"
+			"dist/nodes/Webinar/WebinarJam.node.js",
+			"dist/nodes/Webinar/EverWebinar.node.js"
 		]
 	},
 	"devDependencies": {
