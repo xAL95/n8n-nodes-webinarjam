@@ -404,7 +404,7 @@ export class WebinarJam implements INodeType {
 						routing: {
 							request: {
 								body: {
-									country: '={{ $value }}',
+									state: '={{ $value }}',
 								},
 							},
 						},
