@@ -1,6 +1,6 @@
 {
 	"name": "n8n-nodes-webinarjam",
-	"version": "1.0.2",
+	"version": "1.0.3",
 	"description": "Use WebinarJam in n8n workflows to automate webinar registrations and attendee handling.",
 	"license": "MIT",
 	"homepage": "https://github.com/xAL95/n8n-nodes-webinarjam",
