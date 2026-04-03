@@ -1,11 +1,14 @@
 {
 	"name": "n8n-nodes-webinarjam",
 	"version": "0.2.1",
-	"description": "Use WebinarJam and EverWebinar in n8n workflows to automate webinar registrations and attendee handling.",
+	"description": "Use WebinarJam in n8n workflows to automate webinar registrations and attendee handling.",
 	"license": "MIT",
-	"homepage": "",
+	"homepage": "https://github.com/xAL95/n8n-nodes-webinarjam",
 	"keywords": [
-		"n8n-community-node-package"
+		"n8n-community-node-package",
+		"n8n",
+		"webinarjam",
+		"webinarjam-api"
 	],
 	"author": {
 		"name": "Artur Litau",
@@ -34,8 +37,7 @@
 			"dist/credentials/WebinarJamApi.credentials.js"
 		],
 		"nodes": [
-			"dist/nodes/Webinar/WebinarJam.node.js",
-			"dist/nodes/Webinar/EverWebinar.node.js"
+			"dist/nodes/WebinarJam/WebinarJam.node.js"
 		]
 	},
 	"devDependencies": {
@@ -47,5 +49,13 @@
 	},
 	"peerDependencies": {
 		"n8n-workflow": "*"
+	},
+	"release-it": {
+		"npm": {
+			"publish": false
+		},
+		"github": {
+			"release": true
+		}
 	}
 }

@@ -1,20 +1,19 @@
 import { NodeConnectionTypes, type INodeType, type INodeTypeDescription } from 'n8n-workflow';
-import { operationGeneral } from './shared/operationGeneral';
 
-export class EverWebinar implements INodeType {
+export class WebinarJam implements INodeType {
 	description: INodeTypeDescription = {
-		displayName: 'EverWebinar',
-		name: 'everWebinar',
+		displayName: 'WebinarJam',
+		name: 'webinarJam',
 		icon: {
-			light: 'file:../../icons/everwebinar.light.svg',
-			dark: 'file:../../icons/everwebinar.dark.svg',
+			light: 'file:../../icons/webinarjam.light.svg',
+			dark: 'file:../../icons/webinarjam.dark.svg',
 		},
 		group: ['input'],
 		version: 1,
 		subtitle: '={{$parameter["operation"] + ": " + $parameter["resource"]}}',
-		description: 'EverWebinar API',
+		description: 'WebinarJam API',
 		defaults: {
-			name: 'EverWebinar',
+			name: 'WebinarJam',
 		},
 		usableAsTool: undefined,
 		inputs: [NodeConnectionTypes.Main],
@@ -57,17 +56,42 @@ export class EverWebinar implements INodeType {
 				noDataExpression: true,
 				options: [
 					{
-						name: 'General',
-						value: 'general',
+						name: 'Country',
+						value: 'country',
 					},
 					{
-						name: 'EverWebinar',
-						value: 'everWebinar',
+						name: 'Webinar',
+						value: 'webinar',
 					},
 				],
-				default: 'everWebinar',
+				default: 'webinar',
 			},
-			...operationGeneral,
+			{
+				displayName: 'Operation',
+				name: 'operation',
+				type: 'options',
+				noDataExpression: true,
+				default: 'getMany',
+				displayOptions: {
+					show: {
+						resource: ['country'],
+					},
+				},
+				options: [
+					{
+						name: 'Get Many',
+						value: 'getMany',
+						action: 'Retrieve a list of countries and states provinces',
+						description: 'Retrieve a list of countries and states/provinces',
+						routing: {
+							request: {
+								method: 'POST',
+								url: '/api/webinarjam/countries',
+							},
+						},
+					},
+				],
+			},
 			{
 				displayName: 'Operation',
 				name: 'operation',
@@ -75,7 +99,7 @@ export class EverWebinar implements INodeType {
 				noDataExpression: true,
 				displayOptions: {
 					show: {
-						resource: ['everWebinar'],
+						resource: ['webinar'],
 					},
 				},
 				options: [
@@ -87,7 +111,7 @@ export class EverWebinar implements INodeType {
 						routing: {
 							request: {
 								method: 'POST',
-								url: '/everwebinar/webinar',
+								url: '/webinarjam/webinar',
 							},
 						},
 					},
@@ -99,7 +123,7 @@ export class EverWebinar implements INodeType {
 						routing: {
 							request: {
 								method: 'POST',
-								url: '/everwebinar/webinars',
+								url: '/webinarjam/webinars',
 							},
 						},
 					},
@@ -114,7 +138,7 @@ export class EverWebinar implements INodeType {
 							},
 							request: {
 								method: 'POST',
-								url: '/everwebinar/registrants',
+								url: '/webinarjam/registrants',
 							},
 							operations: {
 								pagination: {
@@ -144,7 +168,7 @@ export class EverWebinar implements INodeType {
 						routing: {
 							request: {
 								method: 'POST',
-								url: '/everwebinar/register',
+								url: '/webinarjam/register',
 							},
 						},
 					},
@@ -156,7 +180,7 @@ export class EverWebinar implements INodeType {
 						routing: {
 							request: {
 								method: 'POST',
-								url: '/everwebinar/unsubscribe',
+								url: '/webinarjam/unsubscribe',
 							},
 						},
 					},
@@ -170,7 +194,7 @@ export class EverWebinar implements INodeType {
 				default: 0,
 				displayOptions: {
 					show: {
-						resource: ['everWebinar'],
+						resource: ['webinar'],
 						operation: ['get', 'register', 'getRegistrants', 'unsubscribe'],
 					},
 				},
@@ -188,7 +212,7 @@ export class EverWebinar implements INodeType {
 				type: 'number',
 				displayOptions: {
 					show: {
-						resource: ['everWebinar'],
+						resource: ['webinar'],
 						operation: ['register', 'getRegistrants'],
 					},
 				},
@@ -208,7 +232,7 @@ export class EverWebinar implements INodeType {
 				placeholder: 'name@email.com',
 				displayOptions: {
 					show: {
-						resource: ['everWebinar'],
+						resource: ['webinar'],
 						operation: ['register'],
 					},
 				},
@@ -227,7 +251,7 @@ export class EverWebinar implements INodeType {
 				type: 'string',
 				displayOptions: {
 					show: {
-						resource: ['everWebinar'],
+						resource: ['webinar'],
 						operation: ['register'],
 					},
 				},
@@ -241,28 +265,6 @@ export class EverWebinar implements INodeType {
 				default: '',
 			},
 			{
-				displayName: 'Timezone',
-				name: 'timezone',
-				type: 'string',
-				hint: 'Examples: GMT-5 or GMT+2 or GMT+4:30',
-				description:
-					'Required if your webinar timezone is set to “Auto-detect the user’s time zone”',
-				default: 'UTC',
-				displayOptions: {
-					show: {
-						resource: ['everWebinar'],
-						operation: ['get'],
-					},
-				},
-				routing: {
-					request: {
-						body: {
-							timezone: '={{$value}}',
-						},
-					},
-				},
-			},
-			{
 				displayName: 'Return All',
 				name: 'returnAll',
 				type: 'boolean',
@@ -270,7 +272,7 @@ export class EverWebinar implements INodeType {
 				default: false,
 				displayOptions: {
 					show: {
-						resource: ['everWebinar'],
+						resource: ['webinar'],
 						operation: ['getRegistrants'],
 					},
 				},
@@ -286,7 +288,7 @@ export class EverWebinar implements INodeType {
 				default: 50,
 				displayOptions: {
 					show: {
-						resource: ['everWebinar'],
+						resource: ['webinar'],
 						operation: ['getRegistrants'],
 						returnAll: [false],
 					},
@@ -299,7 +301,7 @@ export class EverWebinar implements INodeType {
 				default: 0,
 				displayOptions: {
 					show: {
-						resource: ['everWebinar'],
+						resource: ['webinar'],
 						operation: ['unsubscribe'],
 					},
 				},
@@ -320,7 +322,7 @@ export class EverWebinar implements INodeType {
 				placeholder: 'Add Field',
 				displayOptions: {
 					show: {
-						resource: ['everWebinar'],
+						resource: ['webinar'],
 						operation: ['register'],
 					},
 				},
@@ -337,16 +339,6 @@ export class EverWebinar implements INodeType {
 								},
 							},
 						},
-					},
-					{
-						displayName: 'Date',
-						name: 'date',
-						type: 'string',
-						hint: '2025-01-01 09:00',
-						description:
-							'Use the DATE parameter to register a person to a specific webinar session date. Make sure it matches a valid date returned by a previous API call, or else the API will not be able to register the user to any event at all. Also, if the call was made using a custom timezone, make sure that the same timezone is passed with the request.',
-						default: '',
-						routing: { request: { body: { date: '={{ $value }}' } } },
 					},
 					{
 						displayName: 'IP Address',
@@ -418,16 +410,6 @@ export class EverWebinar implements INodeType {
 						},
 					},
 					{
-						displayName: 'Timezone',
-						name: 'timezone',
-						type: 'string',
-						hint: 'Examples: GMT-5 or GMT+2 or GMT+4:30',
-						description:
-							'For webinars configured to display the schedule in the attendee’s own time zone, the API will automatically convert the time zone to EST, unless you specify a particular time zone',
-						default: 'UTC',
-						routing: { request: { body: { timezone: '={{ $value }}' } } },
-					},
-					{
 						displayName: 'Timezone ID',
 						name: 'timezoneId',
 						type: 'options',
@@ -470,7 +452,7 @@ export class EverWebinar implements INodeType {
 				placeholder: 'Add Field',
 				displayOptions: {
 					show: {
-						resource: ['everWebinar'],
+						resource: ['webinar'],
 						operation: ['getRegistrants'],
 					},
 				},

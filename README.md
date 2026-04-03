@@ -1,8 +1,8 @@
 # n8n-nodes-webinarjam
 
-This is a n8n community node. It lets you use **WebinarJam** and **EverWebinar** in your n8n workflows.
+This is a n8n community node. It lets you use **WebinarJam** in your n8n workflows.
 
-WebinarJam and EverWebinar are webinar platforms that allow you to run live and automated (evergreen) webinars, manage registrations, and access attendee data.
+WebinarJam is a webinar platform that allows you to run live webinars, manage registrations, and access attendee data.
 
 [n8n](https://n8n.io/) is a [fair-code licensed](https://docs.n8n.io/reference/license/) workflow automation platform.
 
@@ -27,21 +27,14 @@ The WebinarJam node supports operations such as:
 - Retrieve webinars
 - Manage webinar registrations
 - Access attendee information
-
-### EverWebinar
-The EverWebinar node supports operations such as:
-- Retrieve evergreen webinars
-- Manage webinar registrations
-- Access attendee information
-
 ---
 
 ## Credentials
 
-To use these nodes, you need an API key from WebinarJam / EverWebinar.
+To use these nodes, you need an API key from WebinarJam.
 
 ### Prerequisites
-- An active WebinarJam or EverWebinar account
+- An active WebinarJam account
 - API access enabled in your account
 
 ### Authentication Method
@@ -71,14 +64,13 @@ If you successfully use them with older n8n versions, please consider opening a 
 
 - [n8n community nodes documentation](https://docs.n8n.io/integrations/#community-nodes)
 - [WebinarJam website](https://webinarjam.com/)
-- [EverWebinar website](https://everwebinar.com/)
 - [Build a declarative-style node (n8n docs)](https://docs.n8n.io/integrations/creating-nodes/build/declarative-style-node/)
 
 ---
 
 ## Version history
 
-- **0.1.0** – Initial release of WebinarJam and EverWebinar nodes
-- **0.1.2** - Add dark icons for WebinarJam and EverWebinar and fix lint issues
+- **0.1.0** – Initial release of WebinarJam node (historically included EverWebinar too)
+- **0.1.2** - Add dark icons for WebinarJam and fix lint issues
 - **0.2.0** - Structural refactor, renamed credentials, and added a new `general` operation with the `getCountries` option
 

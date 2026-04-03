@@ -8,7 +8,7 @@ import type {
 
 export class WebinarJamApi implements ICredentialType {
 	name = 'webinarJamApi';
-	displayName = 'WebinarJam / EverWebinar API';
+	displayName = 'WebinarJam API';
 	documentationUrl = 'https://support.webinarjam.com/support/solutions/153000174610';
 	icon: Icon = {
 		light: 'file:../icons/webinarjam.light.svg',
